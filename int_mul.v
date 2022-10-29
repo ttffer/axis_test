@@ -149,6 +149,7 @@ end
                 send_done<=1'b0;
 	        end  
         end
+        
         WRITE_FIFO:
             begin 
                     if (write_pointer <= NUMBER_OF_INPUT_WORDS-1)
