@@ -31,7 +31,6 @@ module int_mul #(
 	reg [bit_num-1:0] write_pointer;
 
 
-
 	// I/O Connections assignments
     reg [1:0] mst_exec_state;// State variable
     parameter [1:0] IDLE = 1'b0,        // This is the initial/idle state 
