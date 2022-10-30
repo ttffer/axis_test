@@ -62,10 +62,10 @@ assign m_axis_last =axis_tlast_delay;
 assign m_axis_valid =axis_tvalid_delay;
 
 
-assign s_axis_ready =   ((mst_exec_state == WRITE_FIFO) && (write_pointer <= NUMBER_OF_INPUT_WORDS-1));
+assign s_axis_ready =   ((mst_exec_state == WRITE_FIFO) && (write_pointer <= NUMBER_OF_INPUT_WORDS-1)&&(~writes_done));
 
 //write enable out reg/ reg_send
-assign out_reg_wren = (mst_exec_state==EXECUTION_STATE);
+assign out_reg_wren = ((mst_exec_state==EXECUTION_STATE )&&());
 //next part/output needs to be ready to receive signal
 assign out_reg_send_wren =((mst_exec_state==SEND_STATE) && m_axis_ready);
 
@@ -133,7 +133,7 @@ end
 	//assign axis_tready = ((mst_exec_state == WRITE_FIFO) && (write_pointer <= NUMBER_OF_INPUT_WORDS-1));
 
 
-//pointer moving
+//pointer moving done flag
     always@(posedge axi_clk)begin 
         case (mst_exec_state)
         IDLE: 
@@ -149,7 +149,7 @@ end
                 send_done<=1'b0;
 	        end  
         end
-        
+
         WRITE_FIFO:
             begin 
                     if (write_pointer <= NUMBER_OF_INPUT_WORDS-1)
